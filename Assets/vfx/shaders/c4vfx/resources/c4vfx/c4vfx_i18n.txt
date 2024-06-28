@@ -1,0 +1,185 @@
+// C4VFX翻译配置文件
+
+ShowOriginalPage = 显示原始页面
+
+// Tabs
+Settings = 设置
+MainTex = 纹理
+MaskTex = 遮罩
+Distortion = 扭曲
+Dissovle = 溶解
+ModelPostion = 模型点
+Fresnel = 菲涅尔
+FlowLight = 扫光
+
+// Settings
+_DoubleFaceOn = 开启双面
+_BackColorOn = 设置背面颜色
+_BackColor = 背面颜色
+_BackColorScale = 背面颜色倍数
+_CullMode = 剔除模式
+_ZWriteMode = 深度写入
+BlendMode = 混合模式
+Skew = 斜切
+
+// MainTex
+_MainTex = 主纹理
+_MainUVId = 选择UV
+_MainColorChannel = 选择颜色通道
+_MainColorChannel_Tooltip = 当只选择一个通道时，会用这个通道的值填充另外两个通道
+_MainAlphaChannel = 选择alpha通道
+_MainAlphaChannel_Tooltip = AVG_RGB: (R+G+B)/3
+_MainPolarOn = 使用极坐标
+_MainColor = 主纹理颜色
+_MainColorScale = 主纹理颜色倍数
+_MainSequenceOn = 开启播放序列帧
+SequenceGrid = 纵横分布数
+SequenceRange = 起始与长度(0: 所有)
+SequenceDuration = 播放时长(单位: ms)
+SequenceLoop = Loop
+SequenceTimes = 播放次数
+SequenceTimes_Tooltip = 须填加C4VFXShaderHelper脚本组件
+UVPivot = UV锚点
+UVMoveSpeed = UV移动速度
+UVRotateSpeed = UV旋转速度
+UVRotation = UV旋转角度
+_MainUVSoloRotate = UV Tile各自旋转
+_MainDistortionOn = 开启扭曲
+_MainDistortionIntensity = 扭曲强度
+
+// MaskTex
+_MaskOn = 启用遮罩
+_MaskTex = 遮罩
+_MaskUVId = 选择UV
+_SpaceMaskOn = 世界坐标遮罩
+_MaskRevertOn = 反向
+_ColorChannel = 选择颜色通道
+_ColorChannel_Tooltip = 当只选择一个通道时，会用这个通道的值填充另外两个通道
+_ColorBlendMode = 颜色混合模式
+_AlphaChannel = 选择alpha通道
+_AlphaChannel_Tooltip = AVG_RGB: (R+G+B)/3
+_AlphaBlendMode = alpha混合模式
+MaskBlendMode_Multiply = 与底相乘
+MaskBlendMode_Add = 与底相加
+MaskBlendMode_Zero = 不影响
+MaskBlendMode_Multiply_To_Mask = 与遮罩1相乘
+MaskBlendMode_Add_To_Mask = 与遮罩1相加
+_MaskColor = 颜色
+_MaskColorScale = 颜色倍数
+_MaskSequenceOn = 开启播放序列帧
+_MaskPolarOn = 使用极坐标
+_MaskDistortionOn = 开启扭曲
+_MaskDistortionIntensity = 扭曲强度
+_MaskUVSoloRotate = UV Tile各自旋转
+
+// Mask2Tex
+_Mask2On = 启用遮罩2
+_Mask2Tex = 遮罩2
+_Mask2UVId = 选择UV
+_SpaceMask2On = 世界坐标遮罩
+_Mask2RevertOn = 反向
+_Mask2AlphaChannel = 选择alpha通道
+_Mask2AlphaChannel_Tooltip = AVG_RGB: (R+G+B)/3
+_Mask2Color = 颜色
+_Mask2ColorScale = 颜色倍数
+_Mask2SequenceOn = 开启播放序列帧
+_Mask2PolarOn = 使用极坐标
+_Mask2DistortionOn = 开启扭曲
+_Mask2DistortionIntensity = 扭曲强度
+_Mask2UVSoloRotate = UV Tile各自旋转
+
+// Mask3Tex
+_Mask3On = 启用遮罩3
+_Mask3Tex = 遮罩3
+_Mask3UVId = 选择UV
+_SpaceMask3On = 世界坐标遮罩
+_Mask3RevertOn = 反向
+_Mask3AlphaChannel = 选择alpha通道
+_Mask3AlphaChannel_Tooltip = AVG_RGB: (R+G+B)/3
+_Mask3Color = 颜色
+_Mask3ColorScale = 颜色倍数
+_Mask3SequenceOn = 开启播放序列帧
+_Mask3PolarOn = 使用极坐标
+_Mask3DistortionOn = 开启扭曲
+_Mask3DistortionIntensity = 扭曲强度
+_Mask3UVSoloRotate = UV Tile各自旋转
+
+// Mask4Tex
+_Mask4On = 启用遮罩4
+_Mask4Tex = 遮罩4
+_Mask4UVId = 选择UV
+_SpaceMask4On = 世界坐标遮罩
+_Mask4RevertOn = 反向
+_Mask4AlphaChannel = 选择alpha通道
+_Mask4AlphaChannel_Tooltip = AVG_RGB: (R+G+B)/3
+_Mask4Color = 颜色
+_Mask4ColorScale = 颜色倍数
+_Mask4SequenceOn = 开启播放序列帧
+_Mask4PolarOn = 使用极坐标
+_Mask4DistortionOn = 开启扭曲
+_Mask4DistortionIntensity = 扭曲强度
+UVRotateOffset = UV旋转中心偏移
+_Mask4UVSoloRotate = UV Tile各自旋转
+
+// Distortion
+_DistortionOn = 开启扭曲
+_DistortionTex = 扭曲图
+_DistortionUVId = 选择UV
+_DistortionIntensity = 扭曲强度
+_DistortionPolarOn = 使用极坐标
+_DistortionUVSoloRotate = UV Tile各自旋转
+
+// Distortion2
+_Distortion2On = 启用扭曲2
+_Distortion2Tex = 扭曲图
+_Distortion2UVId = 选择UV
+_Distortion2Intensity = 扭曲强度
+_Distortion2PolarOn = 使用极坐标
+_Distortion2UVSoloRotate = UV Tile各自旋转
+
+// Dissolve
+_DissolveOn = 开启溶解
+_DissolveTex = 溶解图
+_DissolveUVId = 选择UV
+_DissolvePolarOn = 使用极坐标
+_DissolveDistortionOn = 开启扭曲
+_DissolveDistortionIntensity = 扭曲强度
+_UseCustomThreshold = 粒子CustomData作为溶解值
+_UseCustomThreshold_Tooltip = 须在粒子Renderer中勾上CustomData(Custom1, number: 1)和Custom Vertex Streams(添加Custom1.x)
+_DissolveThreshold = 溶解值
+_DissolvePower = 溶解强度
+_DissolveUVDirOn = 开启UV定向
+DissolveUVDir = UV溶解方向
+_DissolveWorldDirOn = 开启世界坐标定向
+_DissolveWorldDir = 世界坐标溶解方向 
+_DissolveWorldScale = 世界坐标溶解比例
+_DissolveEdgeOn = 开启溶解边缘
+_DissolveEdgeColor = 边缘颜色
+_DissolveEdgeColorScale = 边缘颜色倍数
+_DissolveEdgeLevelsOn = 开启边缘色阶
+_DissolveEdgeLevelsTex = 色阶图
+_DissolveEdgeStart = 边缘开始
+_DissolveEdgeWidth = 边缘宽度
+
+// Model Position Move
+_ModelPositionMoveOn = 开启模型点位置移动
+_ModelPositionMoveTex = 移动图
+_ModelPositionMoveUVId = 选择UV
+_ModelPositionMovePolarOn = 使用极坐标
+_ModelPositionMoveIntensity = 位移强度
+_ModelPositionDistortionOn = 开启扭曲
+_ModelPositionDistortionIntensity = 扭曲强度
+
+// Fresnel
+_FresnelOn = 开启菲涅尔
+_FresnelTransparentOn = 中心是否透明
+_FresnelColor = 颜色
+_FresnelColorScale = 颜色倍数
+_FresnelPower = 高亮宽度
+
+// FlowLight
+_FlowLightOn = 开启扫光
+_FlowLightTex = 扫光范围图
+_FlowLightColor = 扫光颜色值RGB（0.0-1.0）,宽度W（1-100）
+_FlowLightPos = 扫光位置（-1.0-1.0）
+_FlowLightOffset = 偏移(0.0-1.0)
