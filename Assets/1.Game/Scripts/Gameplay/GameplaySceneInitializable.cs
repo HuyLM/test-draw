@@ -12,8 +12,7 @@ namespace TrickyBrain
         public override IEnumerator IInitialize()
         {
             int levelIndex = GameplayInputTransporter.LevelIndex;
-            yield return DrawManager.Instance.SpawnLevel(levelIndex, ()=> {
-                PopupHUD.Instance.Show<HomePopup>();
+            yield return DrawManager.Instance.ISpawnLevel(levelIndex, ()=> {
             });
             yield break;
         }

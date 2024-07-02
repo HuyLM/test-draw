@@ -145,6 +145,7 @@ namespace TrickyBrain
             LocalSaveLoadManager.Instance.RegisterModule(typeof(IngameSaveData));
             LocalSaveLoadManager.Instance.RegisterModule(typeof(LevelsSaveData));
             LocalSaveLoadManager.Instance.RegisterModule(typeof(RemoteConfigSaveData));
+            LocalSaveLoadManager.Instance.RegisterModule(typeof(ShopSaveData));
             LocalSaveLoadManager.Instance.Install();
 
         }

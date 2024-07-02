@@ -13,21 +13,5 @@ namespace AtoGame.OtherModules.Inventory
         {
             return items;
         }
-     
-
-#if UNITY_EDITOR
-        public void LockAllItem()
-        {
-            foreach (var i in items)
-            {
-                i.lockID = true;
-                UnityEditor.EditorUtility.SetDirty(i);
-            }
-            foreach (var c in Collectors)
-            {
-                c.LockAllItem();
-            }
-        }
-#endif
     }
 }

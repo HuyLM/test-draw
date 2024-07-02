@@ -11,22 +11,22 @@ namespace AtoGame.OtherModules.Inventory
     {
         public const int NoneId = 0;
         [SerializeField] private bool enableLog;
-        [SerializeField] private ItemCollector[] collectors;
+        [SerializeField] private BaseItemCollector[] collectors;
         private Dictionary<int, ItemConfig> itemDictionary;
 
         public bool EnableLog { get => enableLog; }
-        public ItemCollector[] Collectors { get => collectors; }
+        public BaseItemCollector[] Collectors { get => collectors; }
 
         public void OnInitialize()
         {
             itemDictionary = new Dictionary<int, ItemConfig>();
-            foreach (ItemCollector collector in collectors)
+            foreach (BaseItemCollector collector in collectors)
             {
                 AddCollectorToDictionary(collector, string.Empty);
             }
         }
 
-        private void AddCollectorToDictionary(ItemCollector collector, string path)
+        private void AddCollectorToDictionary(BaseItemCollector collector, string path)
         {
             path += collector.NameCollector + "/";
             foreach (var c in collector.Collectors)

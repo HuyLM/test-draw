@@ -52,8 +52,8 @@ namespace TrickyBrain
                 (fail) =>
                 {
                     PopupHUD.Instance.Hide<LoadingPopup>();
-                    string message = LocalizationHelper.Localize("key_purchase_iap_failed_message");
-                    string title = LocalizationHelper.Localize("key_purchase_iap_failed_title");
+                    string message = "key_purchase_iap_failed_message";
+                    string title ="key_purchase_iap_failed_title";
                     NoticePopup noticePopup = PopupHUD.Instance.Show<NoticePopup>();
                     noticePopup.SetMessage(message);
                     noticePopup.SetTitle(title);
@@ -61,8 +61,8 @@ namespace TrickyBrain
             }
             else
             {
-                string message = LocalizationHelper.Localize("key_bought_purchase_iap_message");
-                string title = LocalizationHelper.Localize("key_bought_purchase_iap_title");
+                string message = "key_bought_purchase_iap_message";
+                string title = "key_bought_purchase_iap_title";
                 NoticePopup noticePopup = PopupHUD.Instance.Show<NoticePopup>();
                 noticePopup.SetMessage(message);
                 noticePopup.SetTitle(title);

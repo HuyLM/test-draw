@@ -43,6 +43,10 @@ namespace TrickyBrain
             {
                 return;
             }
+            if(line == null)
+            {
+                return;
+            }
             bool added = line.AddLine(this);
             if(added)
             {

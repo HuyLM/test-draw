@@ -45,3 +45,4 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   IngameConfigData: {fileID: 11400000, guid: 70951810a38f4724d85ac289de3d9a29, type: 2}
+  ShopConfigData: {fileID: 11400000, guid: be897df75262e494198612c07052c0f3, type: 2}

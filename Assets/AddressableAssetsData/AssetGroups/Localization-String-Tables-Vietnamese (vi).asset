@@ -16,13 +16,7 @@ MonoBehaviour:
   m_Data:
     m_SerializedData: []
   m_GUID: bb3e9c8a97d912445a428bbe1bf56370
-  m_SerializeEntries:
-  - m_GUID: 849ccb8397f11db4bb3a3583114e5e3b
-    m_Address: Game_vi
-    m_ReadOnly: 1
-    m_SerializedLabels:
-    - Locale-vi
-    FlaggedDuringContentUpdateRestriction: 0
+  m_SerializeEntries: []
   m_ReadOnly: 1
   m_Settings: {fileID: 11400000, guid: 5e5fe3f925d91394da07a7d37a6a65fa, type: 2}
   m_SchemaSet:

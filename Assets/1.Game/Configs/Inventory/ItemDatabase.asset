@@ -13,4 +13,5 @@ MonoBehaviour:
   m_Name: ItemDatabase
   m_EditorClassIdentifier: 
   enableLog: 1
-  collectors: []
+  collectors:
+  - {fileID: 11400000, guid: be897df75262e494198612c07052c0f3, type: 2}

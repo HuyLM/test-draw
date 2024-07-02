@@ -12,13 +12,9 @@ namespace TrickyBrain
 {
     public class WinPopup : BasePopup
     {
-        [SerializeField] private Button btnHome;
         [SerializeField] private Button btnReplay;
         [SerializeField] private Button btnNext;
-        [SerializeField] private Button btnSkip;
         [SerializeField] private Image imgLevel;
-        [SerializeField] private GameObject goWin;
-        [SerializeField] private GameObject goLose;
         private int _curLevelIndex;
         private Vector2 highlightPosition;
         private bool isWin;
@@ -26,10 +22,8 @@ namespace TrickyBrain
         protected override void Start()
         {
             base.Start();
-            btnHome.onClick.AddListener(OnHomeButtonClicked);
             btnReplay.onClick.AddListener(OnReplayButtonClicked);
             btnNext.onClick.AddListener(OnNextButtonClicked);
-            btnSkip.onClick.AddListener(OnSkipButtonClicked);
         }
 
         protected override void ActiveFrame()
@@ -57,12 +51,10 @@ namespace TrickyBrain
                 }
                 canNextLevel = saveData.HasNextLevel(_curLevelIndex);
                 btnNext.SetStateButton(canNextLevel, true);
-                btnSkip.SetStateButton(false, false);
             }
             else
             {
                 bool hasNextLevel = saveData.HasNextLevel(_curLevelIndex);
-                btnSkip.SetStateButton(hasNextLevel, true);
                 btnNext.SetStateButton(false, false);
             }
         }
@@ -79,31 +71,6 @@ namespace TrickyBrain
         public void SetWin(bool isWin)
         {
             this.isWin = isWin;
-            goWin.SetActive(isWin);
-            goLose.SetActive(isWin == false);
-        }
-
-        private void OnHomeButtonClicked()
-        {
-            if(AdsManager.Instance.IsInterstitialReady())
-            {
-                AdsManager.Instance.ShowInterstitial("GotoHome", GotoHome, GotoHome);
-            }
-            else
-            {
-                GotoHome();
-            }
-        }
-
-        private void GotoHome()
-        {
-            Hide();
-            PopupHUD.Instance.Show<HomePopup>().SetBlockPlay(true);
-            GameManager.Instance.Spawn(_curLevelIndex, () => {
-                // GameManager.Instance.StartLevel();
-                PopupHUD.Instance.GetActiveFrame<HomePopup>().SetBlockPlay(false);
-            });
-                        
         }
 
         private void OnReplayButtonClicked()
@@ -121,11 +88,8 @@ namespace TrickyBrain
         private void Replay()
         {
             Hide();
-            PopupHUD.Instance.Show<HomePopup>().SetBlockPlay(true);
             GameTracking.LogReplayLevel(_curLevelIndex);
-            GameManager.Instance.Spawn(_curLevelIndex, () => {
-                GameManager.Instance.StartLevel();
-                PopupHUD.Instance.Hide<HomePopup>();
+            DrawManager.Instance.SpawnLevel(_curLevelIndex, () => {
             });
            
         }
@@ -165,53 +129,7 @@ namespace TrickyBrain
                 nextLevelIndex = _curLevelIndex + 1;
             }
             Hide();
-            PopupHUD.Instance.Show<HomePopup>().SetBlockPlay(true);
-            GameManager.Instance.Spawn(nextLevelIndex, () => {
-                GameManager.Instance.StartLevel();
-                PopupHUD.Instance.Hide<HomePopup>();
-            });
-        }
-
-        private void OnSkipButtonClicked()
-        {
-            if(AdsManager.Instance.IsRewardVideoReady())
-            {
-                GameTracking.LogShowAds(true, "feature_skip_lose");
-                AdsManager.Instance.ShowRewardVideo("Ingame_Skip_Lose", () => {
-                    SkipLevel();
-                }, ()=> {
-                    GameTracking.LogShowAds(false, "feature_skip_lose");
-                    string message = LocalizationHelper.Localize("key_show_ad_failed_message");
-                    string title = LocalizationHelper.Localize("key_show_ad_failed_title");
-                    NoticePopup noticePopup = PopupHUD.Instance.Show<NoticePopup>();
-                    noticePopup.SetMessage(message);
-                    noticePopup.SetTitle(title);
-                });
-            }
-            else
-            {
-                GameTracking.LogShowAds(false, "feature_skip_lose");
-                string message = LocalizationHelper.Localize("key_ad_not_availiable_message");
-                string title = LocalizationHelper.Localize("key_ad_not_availiable_title");
-                NoticePopup noticePopup = PopupHUD.Instance.Show<NoticePopup>();
-                noticePopup.SetMessage(message);
-                noticePopup.SetTitle(title);
-            }
-        }
-
-        private void SkipLevel()
-        {
-            GameManager.Instance.SkipLevel();
-
-            int nextLevelIndex = _curLevelIndex + 1;
-            var saveData = LocalSaveLoadManager.Get<LevelsSaveData>();
-            saveData.GetLevel(_curLevelIndex).SkipLevel(false);
-            saveData.GetLevel(nextLevelIndex).UnlockLevel(true);
-            Hide();
-            PopupHUD.Instance.Show<HomePopup>().SetBlockPlay(true);
-            GameManager.Instance.Spawn(nextLevelIndex, () => {
-                GameManager.Instance.StartLevel();
-                PopupHUD.Instance.Hide<HomePopup>();
+            DrawManager.Instance.SpawnLevel(nextLevelIndex, () => {
             });
         }
     }

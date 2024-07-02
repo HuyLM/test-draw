@@ -39,30 +39,5 @@ namespace TrickyBrain
             public int NeedFindableObjectNumber;
         }
 
-        public class AddFindableObjectsEvent : IEventParams
-        {
-            public FindableObject[] FindableObjects;
-        }
-        
-        public class InitUseableObjectsEvent : IEventParams
-        {
-            public UseableObject[] UseableObjects;
-        }
-
-        public class AddUseableObjectsEvent : IEventParams
-        {
-            public UseableObject UseableObject;
-        }
-
-        public class RemoveUseableObjectsEvent : IEventParams
-        {
-            public UseableObject[] UseableObjects;
-        }
-
-        public class ReplaceUseableObjectEvent : IEventParams
-        {
-            public UseableObject From;
-            public UseableObject To;
-        }
     }
 }

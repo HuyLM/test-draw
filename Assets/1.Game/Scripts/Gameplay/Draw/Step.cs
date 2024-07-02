@@ -7,6 +7,11 @@ using UnityEngine;
 
 namespace TrickyBrain
 {
+    public enum HintState
+    {
+        Ready, Using, Pausing
+    }
+
     public class Step : MonoBehaviour
     {
         [Space]
@@ -46,6 +51,7 @@ namespace TrickyBrain
             drawer.OnEndDraw = OnEndDraw;
             drawer.InitStep();
             line.InitStep();
+            IgnoreInput(true);
         }
 
         private void OnBeginDraw()

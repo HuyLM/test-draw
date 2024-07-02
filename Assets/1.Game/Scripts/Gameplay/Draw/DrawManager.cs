@@ -56,7 +56,12 @@ namespace TrickyBrain
             }
         }
 
-        public IEnumerator SpawnLevel(int levelIndex, Action onSpawned)
+        public void SpawnLevel(int levelIndex, Action onSpawned)
+        {
+            StartCoroutine(ISpawnLevel(levelIndex, onSpawned));
+        }
+
+        public IEnumerator ISpawnLevel(int levelIndex, Action onSpawned)
         {
 
             _curLevelIndex = levelIndex;
@@ -72,6 +77,7 @@ namespace TrickyBrain
                 CurLevel.InitLevel(OnWonLevel, OnLosedLevel);
                 onSpawned?.Invoke();
                 EventDispatcher.Instance.Dispatch(new LoadedLevelEvent() { LevelIndex = levelIndex });
+                StartLevel();
             });
         }
 
@@ -99,8 +105,6 @@ namespace TrickyBrain
                 winParticles[i].Play();
             }
 
-            Debug.Log("Winnnnnnnnnnnnnnnnnnn");
-            yield break;
             // DPVibration.PlayCongratulations();
             //DPSoundManager.Instance.PlayCongratulations();
             var winPopup = PopupHUD.Instance.GetFrame<WinPopup>();
@@ -135,8 +139,6 @@ namespace TrickyBrain
         private IEnumerator DelayShowLose()
         {
 
-            Debug.Log("Loseeeeeeeeeeeeeeeeeeee");
-            yield break;
             /*
             DPVibration.PlayCongratulations();
             DPSoundManager.Instance.PlayLose();

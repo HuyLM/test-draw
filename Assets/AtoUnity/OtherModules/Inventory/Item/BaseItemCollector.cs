@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using static UnityEditor.Progress;
 
 namespace AtoGame.OtherModules.Inventory
 {
@@ -14,6 +15,21 @@ namespace AtoGame.OtherModules.Inventory
         public virtual List<ItemCollector> Collectors => collectors;
 
         public abstract List<ItemConfig> GetItems();
-       
+
+#if UNITY_EDITOR
+        public void LockAllItem()
+        {
+            foreach(var i in GetItems())
+            {
+                i.lockID = true;
+                UnityEditor.EditorUtility.SetDirty(i);
+            }
+            foreach(var c in Collectors)
+            {
+                c.LockAllItem();
+            }
+        }
+#endif
+
     }
 }

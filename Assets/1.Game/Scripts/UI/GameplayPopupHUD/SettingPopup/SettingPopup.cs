@@ -15,9 +15,6 @@ namespace TrickyBrain
         [SerializeField] private ToggleSwitch tsHaptics;
         [SerializeField] private ToggleSwitch tsSound;
         [SerializeField] private ToggleSwitch tsMusic;
-        [SerializeField] private Button btnNext;
-        [SerializeField] private Button btnPrevious;
-        [SerializeField] private float delay;
 
         protected override void Start()
         {
@@ -25,15 +22,11 @@ namespace TrickyBrain
             tsHaptics.OnChangeSwitch = OnHapticSwitchChanged;
             tsSound.OnChangeSwitch = OnSoundSwitchChanged;
             tsMusic.OnChangeSwitch = OnMusicSwitchChanged;
-            btnNext.onClick.AddListener(OnNextButtonClicked);
-            btnPrevious.onClick.AddListener(OnPreviousButtonClicked);
         }
 
         protected override void ActiveFrame()
         {
             base.ActiveFrame();
-            btnNext.interactable = true;
-            btnPrevious.interactable = true;
             var saveData = LocalSaveLoadManager.Get<GameSettingSaveData>();
             tsHaptics.ForceSetState(saveData.UseHaptic);
             tsSound.ForceSetState(saveData.SoundEnable);
@@ -74,60 +67,6 @@ namespace TrickyBrain
             {
                 GameSoundManager.Instance.StopMusic();
             }
-        }
-
-        private void OnNextButtonClicked()
-        {
-            btnNext.interactable = false;
-            btnPrevious.interactable = false;
-
-            DOVirtual.DelayedCall(delay, () => {
-                btnNext.interactable = true;
-                btnPrevious.interactable = true;
-            });
-            
-            int languageNumber = LocalizationSettings.AvailableLocales.Locales.Count;
-            int selected = 0;
-            for(int i = 0; i < languageNumber; ++i)
-            {
-                var locale = LocalizationSettings.AvailableLocales.Locales[i];
-                if(LocalizationSettings.SelectedLocale == locale)
-                    selected = i;
-            }
-            int nextIndex = (selected + 1) % languageNumber;
-            LocalizationSettings.SelectedLocale = LocalizationSettings.AvailableLocales.Locales[nextIndex];
-        }
-
-        private void OnPreviousButtonClicked()
-        {
-            btnNext.interactable = false;
-            btnPrevious.interactable = false;
-
-            DOVirtual.DelayedCall(delay, () => {
-                btnNext.interactable = true;
-                btnPrevious.interactable = true;
-            });
-
-
-            int languageNumber = LocalizationSettings.AvailableLocales.Locales.Count;
-            int selected = 0;
-            for(int i = 0; i < languageNumber; ++i)
-            {
-                var locale = LocalizationSettings.AvailableLocales.Locales[i];
-                if(LocalizationSettings.SelectedLocale == locale)
-                    selected = i;
-            }
-
-            int nextIndex = selected - 1;
-            if(nextIndex < 0)
-            {
-                nextIndex = languageNumber - 1;
-            }
-            else
-            {
-                nextIndex  = nextIndex % languageNumber;
-            }
-            LocalizationSettings.SelectedLocale = LocalizationSettings.AvailableLocales.Locales[nextIndex];
         }
     }
 }

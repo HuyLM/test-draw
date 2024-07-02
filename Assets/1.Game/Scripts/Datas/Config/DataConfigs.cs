@@ -10,6 +10,7 @@ namespace TrickyBrain
     public class DataConfigs : SingletonBindAlive<DataConfigs>
     {
         public IngameConfigData IngameConfigData;
+        public ShopConfigData ShopConfigData;
 
 
         LevelsConfigData levelsConfigData;
