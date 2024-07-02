@@ -9,25 +9,16 @@ namespace TrickyBrain
     public class GameSoundManager : SoundManager<GameSoundManager>
     {
         [Header("Music")]
-        [SerializeField] AudioClip homeBackground;
         [SerializeField] AudioClip gameplayBackground;
 
         [Header("SFX")]
         [SerializeField] AudioClip clickAndPoint;
         [SerializeField] AudioClip congratulations;
-        [SerializeField] AudioClip laughTroll;
-        [SerializeField] AudioClip eraser;
-        [SerializeField] AudioClip lose;
-        [SerializeField] AudioClip correct;
+        [SerializeField] AudioClip drawSound;
         [SerializeField] AudioClip claim;
+        [SerializeField] AudioClip selectPencil;
 
         private bool playingClickSound;
-
-        public void PlayHomeBackground(bool fadein = false, float fadeDuration = 1)
-        {
-            StopMusic();
-            PlayMusic(homeBackground, fadein, fadeDuration);
-        }
 
         public void PlayGameplayBackground(bool fadein = false, float fadeDuration = 1)
         {
@@ -56,19 +47,9 @@ namespace TrickyBrain
             PlaySFX(congratulations);
         }
 
-        public void PlayLaughTroll()
-        {
-            PlaySFX(laughTroll);
-        }
-
         public void PlayDefaultEraser()
         {
-            PlayLoopSFX(eraser);
-        }
-
-        public void PlayLose()
-        {
-            PlaySFX(lose);
+            PlayLoopSFX(drawSound);
         }
 
         public void PlayClaim()
@@ -76,9 +57,9 @@ namespace TrickyBrain
             PlaySFX(claim);
         }
 
-        public void PlayCorrect()
+        public void PlaySelectPencil()
         {
-            PlaySFX(correct);
+            PlaySFX(selectPencil);
         }
     }
 }

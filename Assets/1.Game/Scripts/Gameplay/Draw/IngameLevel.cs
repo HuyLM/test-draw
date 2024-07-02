@@ -1,4 +1,5 @@
 using AtoGame.Base;
+using AtoGame.OtherModules.SoundManager;
 using System;
 using UnityEngine;
 using static TrickyBrain.EventKey;
@@ -23,6 +24,17 @@ namespace TrickyBrain
             if(EventDispatcher.Initialized)
             {
                 EventDispatcher.Instance.RemoveListener<IgnoreInputEvent>(OnIgnoreInput);
+            }
+        }
+
+        private void OnApplicationFocus(bool focus)
+        {
+            if(focus)
+            {
+                AtoGame.Mediation.AdsEventExecutor.ExecuteInUpdate(() =>
+                {
+                    GameSoundManager.Instance.StopLoopSFX();
+                });
             }
         }
 

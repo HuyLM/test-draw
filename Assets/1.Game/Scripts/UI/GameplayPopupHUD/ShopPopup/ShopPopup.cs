@@ -43,6 +43,7 @@ namespace TrickyBrain
                 }
                 displayer.Show();
                 saveData.SaveData();
+                GameSoundManager.Instance.PlaySelectPencil();
                 return;
             }
             if(displayer.Model.UnlockLevel == -1)

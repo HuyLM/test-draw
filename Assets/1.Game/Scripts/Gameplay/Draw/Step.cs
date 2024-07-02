@@ -1,4 +1,5 @@
 using AtoGame.Base;
+using AtoGame.OtherModules.SoundManager;
 using NaughtyAttributes;
 using System;
 using System.Collections;
@@ -56,6 +57,7 @@ namespace TrickyBrain
 
         private void OnBeginDraw()
         {
+            GameSoundManager.Instance.PlayDefaultEraser();
             if(hintState == HintState.Using)
             {
                 StopHint();
@@ -64,6 +66,7 @@ namespace TrickyBrain
 
         private void OnEndDraw()
         {
+            GameSoundManager.Instance.StopLoopSFX();
             if(line.IsWin == true)
             {
                 DoActionsAfterWin();

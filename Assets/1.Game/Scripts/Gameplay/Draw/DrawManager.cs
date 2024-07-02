@@ -106,7 +106,7 @@ namespace TrickyBrain
             }
 
             // DPVibration.PlayCongratulations();
-            //DPSoundManager.Instance.PlayCongratulations();
+            GameSoundManager.Instance.PlayCongratulations();
             var winPopup = PopupHUD.Instance.GetFrame<WinPopup>();
             winPopup.SetWinLevelIndex(_curLevelIndex);
             winPopup.SetWin(true);

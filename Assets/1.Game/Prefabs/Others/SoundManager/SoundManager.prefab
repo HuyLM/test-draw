@@ -305,12 +305,9 @@ MonoBehaviour:
   mixer: {fileID: 24100000, guid: bde7a31c21696d2409cc743b6efbee88, type: 2}
   musicAudioSource: {fileID: 215501935617055239}
   sfxAudioSource: {fileID: 541330580451278417}
-  homeBackground: {fileID: 8300000, guid: 48296ccf1b3a7344d9ed227cc2cdd641, type: 3}
-  gameplayBackground: {fileID: 8300000, guid: 48296ccf1b3a7344d9ed227cc2cdd641, type: 3}
+  gameplayBackground: {fileID: 8300000, guid: 3786e05fc340d484cab7e8701ca60e87, type: 3}
   clickAndPoint: {fileID: 8300000, guid: 257df4c104ac4d94081842595117937a, type: 3}
-  congratulations: {fileID: 8300000, guid: 6c9e29966e3a17946992728b7f7005df, type: 3}
-  laughTroll: {fileID: 8300000, guid: 5d8a176814c00c340b2fca5b8526efe1, type: 3}
-  eraser: {fileID: 8300000, guid: 9ca9261e3ee938b44aa19ee1ad18692c, type: 3}
-  lose: {fileID: 8300000, guid: bf118c2824e550a4996e9bd839a673b0, type: 3}
-  correct: {fileID: 8300000, guid: e3240c104a2bb01488a8402a7413ec84, type: 3}
+  congratulations: {fileID: 8300000, guid: 1d7e54d3238eb694995b69815ebe09b1, type: 3}
+  drawSound: {fileID: 8300000, guid: 9ca9261e3ee938b44aa19ee1ad18692c, type: 3}
   claim: {fileID: 8300000, guid: cc10b6cf678392f408f00d0d3ff11eb8, type: 3}
+  selectPencil: {fileID: 8300000, guid: 37e505b4f20b6294cb64e727f64c4ece, type: 3}
