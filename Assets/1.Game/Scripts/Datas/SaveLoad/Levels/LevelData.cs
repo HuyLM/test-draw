@@ -82,6 +82,7 @@ namespace TrickyBrain
                     LocalSaveLoadManager.Get<LevelsSaveData>().SaveData();
                 }
                 GameTracking.LogLevel_Skip(Index);
+                GameTracking.LogLevelLog(Index, Falcon.FalconAnalytics.Scripts.Enum.LevelStatus.Skip, PlayDurantion);
             }
         }
 
@@ -94,6 +95,8 @@ namespace TrickyBrain
                 saveData.UnlockNextLevel();
                 saveData.SaveData();
                 GameTracking.LogLevelAchieved(Index, 0, false);
+                GameTracking.LogCheckpoint(Index);
+                GameTracking.LogLevelLog(Index, Falcon.FalconAnalytics.Scripts.Enum.LevelStatus.Pass, PlayDurantion);
             }
             else if (State == LevelState.Completed)
             {

@@ -16,7 +16,7 @@ MonoBehaviour:
   iosAppKey: 1df2b2ffd
   androidTestAppKey: 85460dcd
   iosTestAppKey: 8545d445
-  useTestAd: 1
+  useTestAd: 0
   adUnitType: 3
   useTestSuite: 1
   defaultBannerPosition: 2

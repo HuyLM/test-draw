@@ -3,11 +3,14 @@ using AtoGame.Tracking;
 using AtoGame.Tracking.Adjust;
 using AtoGame.Tracking.Appsflyer;
 using AtoGame.Tracking.FB;
+using Falcon;
+using Falcon.FalconAnalytics.Scripts.Enum;
 using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using static AtoGame.OtherModules.Inventory.EventKey;
+using static UnityEngine.Rendering.DebugUI;
 
 namespace TrickyBrain
 {
@@ -15,7 +18,6 @@ namespace TrickyBrain
     {
         public static void PreLoad()
         {
-            return;
             AtoFirebaseTracking.Instance.Preload();
             AtoAdjustTracking.Instance.Preload();
             return;
@@ -43,7 +45,6 @@ namespace TrickyBrain
 
         private static void LogFirebase(string eventName, ParameterBuilder parameterBuilder)
         {
-            return;
             AtoFirebaseTracking.Instance.LogEvent(eventName, parameterBuilder);
         }
 
@@ -55,7 +56,7 @@ namespace TrickyBrain
 
         private static void LogAdjust(string eventName, ParameterBuilder parameterBuilder)
         {
-            return;
+            AtoAdjustTracking.Instance.LogEvent(eventName, parameterBuilder);
         }
 
         public static void LogAdsRemove()
@@ -70,7 +71,7 @@ namespace TrickyBrain
             LogEvent("level_start", parameterBuilder);
             ParameterBuilder adjustParameterBuilder = ParameterBuilder.Create()
             .Add("aj_level", (levelIndex + 1));
-            LogAdjust("7lmv95", adjustParameterBuilder);
+            //LogAdjust("7lmv95", adjustParameterBuilder);
         }
 
         public static void LogLevelComplete(int levelIndex)
@@ -89,6 +90,7 @@ namespace TrickyBrain
              .Add("value", value)
              .Add("source", source);
             LogEvent("earn_virtual_currency", parameterBuilder);
+            DWHLog.Log.ResourceLog(Falcon.FalconAnalytics.Scripts.Enum.FlowType.Source, itemName, id.ToString(), itemName, value);
         }
 
         public static void LogSpendVirtualCurrency(string itemName, long value, string boughtItemName, string source)
@@ -99,6 +101,8 @@ namespace TrickyBrain
              .Add("item_name", boughtItemName)
              .Add("source", source);
             LogEvent("spend_virtual_currency", parameterBuilder);
+
+            DWHLog.Log.ResourceLog(Falcon.FalconAnalytics.Scripts.Enum.FlowType.Sink, itemName, boughtItemName, itemName, value);
         }
 
         public static void LogAdsRewardLoad()
@@ -116,7 +120,7 @@ namespace TrickyBrain
         {
             LogFirebase("ads_reward_show_success", null);
             LogAppsflyer("af_rewarded_displayed", null);
-            LogAdjust("qtfqsb", null);
+            LogAdjust("aj_rewarded_displayed", null);
         }
 
         public static void LogAdsRewardShowFail()
@@ -144,7 +148,7 @@ namespace TrickyBrain
         {
             LogFirebase("ad_inter_show", null);
             LogAppsflyer("af_inters_displayed", null);
-            LogAdjust("25z8mo", null);
+            LogAdjust("aj_inters_displayed", null);
         }
 
         public static void LogAdInterClick()
@@ -152,7 +156,7 @@ namespace TrickyBrain
             LogEvent("ad_inter_click", null);
         }
 
-        #region Only Appsflayer
+        #region Only Appsflayer/Adjust
 
         public static void LogLevelAchieved(int levelIndex, int score, bool replay)
         {
@@ -185,8 +189,20 @@ namespace TrickyBrain
         public static void LogCallShowInter()
         {
             LogAppsflyer("af_inters_show", null);
-            LogAdjust("s0e7cd", null);
+            LogAdjust("aj_inters_show", null);
         }
+
+        public static void LogCallShowBanner()
+        {
+            LogAdjust("aj_banner_show", null);
+        }
+
+        public static void LogDisplayBanner()
+        {
+            LogAdjust("aj_banner_display", null);
+        }
+
+
 
         #endregion
 
@@ -232,5 +248,45 @@ namespace TrickyBrain
             .Add("replay", $"level_{levelIndex + 1}_replay");
             LogEvent("replay_level", parameterBuilder);
         }
+
+        #region Only Falcon
+
+        public static void LogLevelLog(int levelIndex, LevelStatus levelStatus, float duration)
+        {
+            TimeSpan timeSpan = TimeSpan.FromMinutes(duration);
+            DWHLog.Log.LevelLog(levelIndex + 1, timeSpan, 0, "normal", levelStatus);
+        }
+
+        // [Need Tracking]
+        public static void LogInappLog(string productId, string currencyCode, decimal price, string transactionId, string purchaseToken, string where)
+        {
+            DWHLog.Log.InAppLog(productId, currencyCode, price, transactionId, purchaseToken, where);
+        }
+
+        public static void LogAdsLog(AdType type, string where)
+        {
+            DWHLog.Log.AdsLog(type, where);
+        }
+
+        public static void LogSessionLog(float time, string gameMode)
+        {
+            TimeSpan timeSpan = TimeSpan.FromMinutes(time);
+            DWHLog.Log.SessionLog(timeSpan, gameMode);
+        }
+
+        #endregion
+
+        #region Falcon Firebase
+
+        public static void LogCheckpoint(int levelIndex)
+        {
+            if(levelIndex >= 20)
+            {
+                return;
+            }
+            LogFirebase($"checkpoint_{(levelIndex + 1).ToString("D2")}", null);
+        }
+
+        #endregion
     }
 }

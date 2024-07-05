@@ -68,7 +68,7 @@ namespace TrickyBrain
             GameTracking.PreLoad();
             GameVibration.Init();
             InitIronSource(true);
-            //Falcon.FalconGoogleUMP.FalconUMP.ShowConsentForm(InitIronSource, InitAdmob, ShowPopupATT);
+            Falcon.FalconGoogleUMP.FalconUMP.ShowConsentForm(InitIronSource, InitAdmob, ShowPopupATT);
             yield return DataConfigs.Instance.LoadConfigs();
             yield return Yielder.Wait(0.1f);
             SetupSaveLoad();
@@ -136,7 +136,6 @@ namespace TrickyBrain
         {
             InventorySaveData itemInventorySaveData = new InventorySaveData();
             ItemInventoryController.Instance.Init(_itemDataBase, itemInventorySaveData);
-
 
             LocalSaveLoadManager.Instance.Setup(_localSaveLoadConfiguration);
             LocalSaveLoadManager.Instance.RegisterModule(typeof(InventorySaveData), itemInventorySaveData);

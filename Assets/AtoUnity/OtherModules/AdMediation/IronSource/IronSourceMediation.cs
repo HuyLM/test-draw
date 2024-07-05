@@ -8,7 +8,7 @@ namespace AtoGame.Mediation
 #if ATO_IRONSOURCE_MEDIATION_ENABLE
     public class IronSourceMediation : SingletonFreeAlive<IronSourceMediation>, IAdMediationHandler
     {
-        public const string IRONSOURCE_MEDIATION_SETTING_NAME = "IronSourceMediationSettings";
+
         private ISVideoRewardAd rewardAd;
         private ISInterstitialAd interstitialAd;
         private ISBannerAd bannerAd;
@@ -38,7 +38,7 @@ namespace AtoGame.Mediation
             bool manualValidateIntegration = true;
             bool manualSDKInitAPI = true;
 
-            var developerSettings = Resources.Load<IronSourceMediationSettings>(IRONSOURCE_MEDIATION_SETTING_NAME);
+            var developerSettings = Resources.Load<IronSourceMediationSettings>(IronSourceConstants.IRONSOURCE_MEDIATION_SETTING_NAME);
             if(developerSettings != null)
             {
                 manualValidateIntegration = !developerSettings.EnableIntegrationHelper;

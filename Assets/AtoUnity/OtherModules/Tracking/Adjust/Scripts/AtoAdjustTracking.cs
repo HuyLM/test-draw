@@ -168,20 +168,23 @@ namespace AtoGame.Tracking.Adjust
             string type = AdjustConfig.AdjustAdRevenueSourceIronSource;
             if(adPlatform == "admob")
             {
+                eventRevenue = eventRevenue / 1000000f;
                 type = AdjustConfig.AdjustAdRevenueSourceAdMob;
             }
             else if(adPlatform == "ironSource")
             {
                 type = AdjustConfig.AdjustAdRevenueSourceIronSource;
+                revenueCurrency = "USD";
             }
             else if(adPlatform == "applovin")
             {
                 type = AdjustConfig.AdjustAdRevenueSourceAppLovinMAX;
+                revenueCurrency = "USD";
             }
 
 
             AdjustAdRevenue adjustAdRevenue = new AdjustAdRevenue(type);
-            adjustAdRevenue.setRevenue(eventRevenue, "USD");
+            adjustAdRevenue.setRevenue(eventRevenue, revenueCurrency);
             // optional fields
             adjustAdRevenue.setAdRevenueNetwork(adNetwork);
             adjustAdRevenue.setAdRevenueUnit(revenueCurrency);

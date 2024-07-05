@@ -1,0 +1,21 @@
+<dependencies>
+   <iosPods>
+      <iosPod version="6.3.0.0" name="YandexMobileAdsIronSourceAdapters">
+         <sources>
+            <source>https://github.com/CocoaPods/Specs</source>
+         </sources>
+      </iosPod>
+   </iosPods>
+   <androidPackages>
+      <androidPackage spec="com.yandex.android:mobileads:6.3.0">
+         <repositories>
+            <repository>https://maven.google.com/</repository>
+         </repositories>
+      </androidPackage>
+      <androidPackage spec="com.yandex.ads.adapter:ironsource-mobileads:6.3.0.0">
+         <repositories>
+            <repository>https://maven.google.com/</repository>
+         </repositories>
+      </androidPackage>
+   </androidPackages>
+</dependencies>

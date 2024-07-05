@@ -1,10 +1,13 @@
 using AtoGame.Base;
 using AtoGame.Mediation;
 using AtoGame.OtherModules.LocalSaveLoad;
-using AtoGame.Tracking.FB;
+using Falcon;
+using GoogleMobileAds.Api;
+using GoogleMobileAds.Common;
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using TrickyBrain;
 using UnityEngine;
 
 namespace TrickyBrain
@@ -29,24 +32,19 @@ namespace TrickyBrain
         private bool isShowing;
         private Action onRewardVideoLoadCompleted;
 
-        /*
         AdmobBannerAd _admobBannerAd;
-        */
         private float reshowBannerCountdown;
         private bool isCountdownBanner;
 
-        /*
+
         private AdmobAppOpenAd admobAppOpenAd;
-        */
         private DateTime showAOALastTime;
         private Action onAppOpenShowCompleted;
         private bool canShowAOA;
 
         private float lasttimeShowInterstitial;
 
-        /*
-        private AdmobNativeAd admobNativeAd;
-        */
+        //private AdmobNativeAd admobNativeAd;
         private Action OnNativeLoadSuccess;
 
         public Action OnClaimedRewardVideo { get; set; }
@@ -87,7 +85,7 @@ namespace TrickyBrain
 #elif UNITY_IPHONE
 
 #if TEST_AD
-                return "ca-app-pub-3940256099942544/2934735716";
+                return "ca-app-pub-3940256099942544/8388050270";
 #else
               return iosAppBannerAdId;
 #endif
@@ -126,15 +124,18 @@ namespace TrickyBrain
         {
             get
             {
+#if NO_ADS
+                return false;
+#endif
 #if UNITY_EDITOR
                 return false;
 #endif
-                if (isShowing)
+                if(isShowing)
                 {
                     return false;
                 }
 
-                if (canShowAOA == false)
+                if(canShowAOA == false)
                 {
                     return false;
                 }
@@ -144,19 +145,17 @@ namespace TrickyBrain
                 {
                     Debug.LogError("GameManager.Instance.CanShowAOAByRemote == false");
                 }
-             */
+                */
 
-                /*
                 if(admobAppOpenAd == null)
                 {
                     Debug.LogError("admobAppOpenAd == null");
                     return false;
                 }
-                if (admobAppOpenAd.IsAvailable == false)
+                if(admobAppOpenAd.IsAvailable == false)
                 {
                     return false;
                 }
-                  */ 
                 return true;
             }
         }
@@ -165,24 +164,26 @@ namespace TrickyBrain
         {
             base.OnAwake();
             AdMediation.Init();
-            /*
-            admobNativeAd = new AdmobNativeAd(NativeAdId);
-            */
+            //admobNativeAd = new AdmobNativeAd(NativeAdId);
         }
 
         public void InitAdmob()
         {
-            /*
             // Initialize the Google Mobile Ads SDK.
             GoogleMobileAds.Api.MobileAds.Initialize((GoogleMobileAds.Api.InitializationStatus initStatus) =>
             {
                 // This callback is called once the MobileAds SDK is initialized.
                 Debug.Log("[AdsManager]-GoogleMobileAds.Api.MobileAds.Initialize with status: " + initStatus);
-                if (initStatus != null)
+                if(initStatus != null)
                 {
-                    
-                    canShowAOA = LocalSaveLoadManager.Get<AdsSaveData>().IsFirstShowAOA == false;
-                    if (canShowAOA == false)
+
+                    canShowAOA = true;
+                    var adsSaveData = LocalSaveLoadManager.Get<AdsSaveData>();
+                    if(adsSaveData != null)
+                    {
+                        canShowAOA = adsSaveData.IsFirstShowAOA == false;
+                    }
+                    if(canShowAOA == false)
                     {
                         LocalSaveLoadManager.Get<AdsSaveData>().IsFirstShowAOA = false;
                         LocalSaveLoadManager.Get<AdsSaveData>().SaveData();
@@ -192,17 +193,17 @@ namespace TrickyBrain
 
                     CreateBannerView();
 
+                    /*
                     if(admobNativeAd == null)
                     {
                         admobNativeAd = new AdmobNativeAd(NativeAdId);
                     }
                     admobNativeAd.OnLoadSuccess = OnNativeAdLoadSuccess;
                     admobNativeAd.Request();
-
+                    */
                 }
                 showAOALastTime = DateTime.Now;
             });
-            */
         }
 
         protected override void OnAwake()
@@ -217,9 +218,7 @@ namespace TrickyBrain
             AdMediation.onVideoRewardClicked += OnRewardVideoClicked;
             AdMediation.onVideoRewardDisplayedEvent += OnRewardVideoShowSuccess;
             AdMediation.onVideoRewardFailedEvent += OnRewardVideoFailed;
-            /*
             AppStateEventNotifier.AppStateChanged += OnAppStateChanged;
-            */
         }
 
 
@@ -227,13 +226,15 @@ namespace TrickyBrain
 
         public bool IsInterstitialReady()
         {
+#if NO_ADS
             return false;
+#endif
             AdsSaveData adsSaveData = LocalSaveLoadManager.Get<AdsSaveData>();
-            if (adsSaveData.IsRemoveAds)
+            if(adsSaveData.IsRemoveAds)
             {
                 return false;
             }
-            if (Time.realtimeSinceStartup - lasttimeShowInterstitial < showInterstitialCapping)
+            if(Time.realtimeSinceStartup - lasttimeShowInterstitial < showInterstitialCapping)
             {
                 return false;
             }
@@ -260,7 +261,7 @@ namespace TrickyBrain
                 onCompleted?.Invoke();
                 GameTracking.LogAdInterShow();
                 var saveData = LocalSaveLoadManager.Get<LevelsSaveData>();
-                //GameTracking.LogAdsLog(Falcon.FalconAnalytics.Scripts.Enum.AdType.Interstitial, placement);
+                GameTracking.LogAdsLog(Falcon.FalconAnalytics.Scripts.Enum.AdType.Interstitial, placement);
             }, (title, desc) =>
             {
                 isShowing = false;
@@ -290,7 +291,9 @@ namespace TrickyBrain
 
         public bool IsRewardVideoReady()
         {
+#if NO_ADS
             return true;
+#endif
 #if UNITY_EDITOR
             return true;
 #endif
@@ -299,10 +302,12 @@ namespace TrickyBrain
 
         public void ShowRewardVideo(string placement, Action onCompleted = null, Action onFailed = null)
         {
+#if NO_ADS
             isShowing = false;
             onCompleted?.Invoke();
             OnClaimedRewardVideo?.Invoke();
             return;
+#endif
 #if UNITY_EDITOR
             isShowing = false;
             onCompleted?.Invoke();
@@ -317,7 +322,7 @@ namespace TrickyBrain
                 onCompleted?.Invoke();
                 OnClaimedRewardVideo?.Invoke();
                 GameTracking.LogAdsRewardComplete();
-                //GameTracking.LogAdsLog(Falcon.FalconAnalytics.Scripts.Enum.AdType.Reward, placement);
+                GameTracking.LogAdsLog(Falcon.FalconAnalytics.Scripts.Enum.AdType.Reward, placement);
             }, (title, desc) =>
             {
                 isShowing = false;
@@ -365,128 +370,128 @@ namespace TrickyBrain
 
         public void CreateBannerView()
         {
-            /*
             _admobBannerAd = new AdmobBannerAd(BannerAdId, null, AdPosition.Bottom, true);
-            */
         }
 
         public void ShowBanner()
         {
+#if NO_ADS
+            return;
+#endif
             AdsSaveData adsSaveData = LocalSaveLoadManager.Get<AdsSaveData>();
-            if (adsSaveData.IsRemoveAds)
+            if(adsSaveData.IsRemoveAds)
             {
                 return;
             }
-            /*
-          // create an instance of a banner view first.
-          if (_admobBannerAd == null)
-          {
-              CreateBannerView();
-          }
-          if(_admobBannerAd != null && _admobBannerAd.IsAvailable)
-          {
-              _admobBannerAd.Show(
-                  (placment, adInfo)=> {
-                      ReshowBanner();
-                     // GameTracking.LogAdsLog(Falcon.FalconAnalytics.Scripts.Enum.AdType.Banner, string.Empty);
-                  }
-                  , (error, adInfo)=> {
-                      ReshowBanner();
-                  });
-          }
-               */
+
+            GameTracking.LogCallShowBanner();
+
+            // create an instance of a banner view first.
+            if(_admobBannerAd == null)
+            {
+                CreateBannerView();
+            }
+            if(_admobBannerAd != null && _admobBannerAd.IsAvailable)
+            {
+                _admobBannerAd.Show(
+                    (placment, adInfo) => {
+                        ReshowBanner();
+                        GameTracking.LogAdsLog(Falcon.FalconAnalytics.Scripts.Enum.AdType.Banner, string.Empty);
+                        GameTracking.LogDisplayBanner();
+                    }
+                    , (error, adInfo) => {
+                        ReshowBanner();
+                    });
+            }
         }
 
         public void DestroyBanner()
-      {
-            /*
-             if (_admobBannerAd != null)
-             {
-                 _admobBannerAd.DestroyBanner();
-                 _admobBannerAd = null;
-             }
-               */
+        {
+            // AdMediation.DestroyBanner();
+            if(_admobBannerAd != null)
+            {
+                _admobBannerAd.DestroyBanner();
+                _admobBannerAd = null;
+            }
+
         }
 
         private void Update()
-      {
-          if (isCountdownBanner)
-          {
-              reshowBannerCountdown -= Time.deltaTime;
-              if (reshowBannerCountdown < 0)
-              {
-                  isCountdownBanner = false;
-                  ShowBanner();
-              }
-          }
+        {
+            if(isCountdownBanner)
+            {
+                reshowBannerCountdown -= Time.deltaTime;
+                if(reshowBannerCountdown < 0)
+                {
+                    isCountdownBanner = false;
+                    ShowBanner();
+                }
+            }
 
-      }
+        }
 
-      public void ForceShowBanner()
-      {
-          if (isCountdownBanner == false)
-          {
-              ShowBanner();
-          }
-      }
+        public void ForceShowBanner()
+        {
+            if(isCountdownBanner == false)
+            {
+                ShowBanner();
+            }
+        }
 
-      private void ReshowBanner()
-      {
-          if (isCountdownBanner == false)
-          {
-              reshowBannerCountdown = reshowBannerCapping;
-              isCountdownBanner = true;
-              Debug.Log("[AdsManager] ReshowBanner start countdown = " + reshowBannerCountdown);
-          }
-      }
+        private void ReshowBanner()
+        {
+            if(isCountdownBanner == false)
+            {
+                reshowBannerCountdown = reshowBannerCapping;
+                isCountdownBanner = true;
+                Debug.Log("[AdsManager] ReshowBanner start countdown = " + reshowBannerCountdown);
+            }
+        }
 
-      #endregion
+        #endregion
 
-      #region App Open Ad
+        #region App Open Ad
 
-      public void ShowAppOpenAd(Action onCompleted)
-      {
-          if (IsAppOpenAdAvailable)
-          {
-              onAppOpenShowCompleted = onCompleted;
-              isShowing = true;
-              showAOALastTime = DateTime.Now;
-                /*
-              Debug.Log("Showing app open ad.");
-              admobAppOpenAd.Show((placment, adInfo)=> {
-                  onAppOpenShowCompleted?.Invoke();
-                 // GameTracking.LogAdsLog(Falcon.FalconAnalytics.Scripts.Enum.AdType.AppOpen, string.Empty);
-              }, (error, adInfo)=> {
-                  onAppOpenShowCompleted?.Invoke();
-              });
-                */
-          }
-          else
-          {
-              Debug.LogError("[AdsManager] App open ad is not ready yet.");
-              onCompleted?.Invoke();
-          }
-      }
+        public void ShowAppOpenAd(Action onCompleted)
+        {
+            if(IsAppOpenAdAvailable)
+            {
+                onAppOpenShowCompleted = onCompleted;
+                isShowing = true;
+                showAOALastTime = DateTime.Now;
 
-      /*
-      private void OnAppStateChanged(AppState state)
-      {
-          Debug.Log("App State changed to : " + state);
+                Debug.Log("Showing app open ad.");
+                admobAppOpenAd.Show((placment, adInfo) => {
+                    onAppOpenShowCompleted?.Invoke();
+                    GameTracking.LogAdsLog(Falcon.FalconAnalytics.Scripts.Enum.AdType.AppOpen, string.Empty);
+                }, (error, adInfo) => {
+                    onAppOpenShowCompleted?.Invoke();
+                });
+            }
+            else
+            {
+                Debug.LogError("[AdsManager] App open ad is not ready yet.");
+                onCompleted?.Invoke();
+            }
+        }
 
-          // if the app is Foregrounded and the ad is available, show it.
-          if (state == AppState.Foreground)
-          {
-              if ((DateTime.Now - showAOALastTime).TotalSeconds < 20)
-              {
-                  return;
-              }
+        private void OnAppStateChanged(AppState state)
+        {
+            Debug.Log("App State changed to : " + state);
 
-              StartCoroutine(DelayShowAOA());
-          }
-      }
-      */
+            // if the app is Foregrounded and the ad is available, show it.
+            if(state == AppState.Foreground)
+            {
+                if((DateTime.Now - showAOALastTime).TotalSeconds < 20)
+                {
+                    return;
+                }
 
-            private IEnumerator DelayShowAOA()
+                StartCoroutine(DelayShowAOA());
+            }
+        }
+
+        private IEnumerator DelayShowAOA()
         {
             yield return null;
             ShowAppOpenAd(null);
@@ -494,11 +499,20 @@ namespace TrickyBrain
 
         #endregion
 
+        /*
         #region Native
 
-        /*
-        public AdmobNativeAd NativeAd { get => admobNativeAd; }
-        */
+        public AdmobNativeAd NativeAd
+        {
+            get
+            {
+                if(admobNativeAd == null)
+                {
+                    admobNativeAd = new AdmobNativeAd(NativeAdId);
+                }
+                return admobNativeAd;
+            }
+        }
 
         private void OnNativeAdLoadSuccess()
         {
@@ -518,28 +532,37 @@ namespace TrickyBrain
         {
             OnNativeLoadSuccess = null;
         }
-
         #endregion
+        */
+
         private void OnAdRevenuePaidEvent(ImpressionData impressionData)
         {
-            double revenue = impressionData.revenue.Value;
-
             AtoGame.Tracking.ParameterBuilder parameterBuilder = AtoGame.Tracking.ParameterBuilder.Create()
             .Add("ad_platform", impressionData.adPlatform)
             .Add("ad_source", impressionData.adNetwork)
             .Add("ad_unit_name", impressionData.instanceName)
             .Add("ad_format", impressionData.adUnit)
             .Add("placement", impressionData.placement)
-            .Add("value", revenue.ToString())
+            .Add("value", impressionData.revenue.ToString())
             .Add("currency", "USD");
 #if APPSFLYER_ADREVENUE_ENABLE
             AtoGame.Tracking.Appsflyer.AtoAppsflyerTracking.Instance.LogAdRevenue(impressionData.adNetwork,
                                                 impressionData.adPlatform,
-                                                revenue,
+                                                impressionData.revenue.Value,
                                                 "USD",
                                                 parameterBuilder.BuildString());
 #endif
-            AtoFirebaseTracking.Instance.LogAdRevenue(parameterBuilder);
+            double revenue = impressionData.revenue.Value;
+            var impressionParameters = new[] {
+              new Firebase.Analytics.Parameter("ad_platform", impressionData.adPlatform),
+              new Firebase.Analytics.Parameter("ad_source", impressionData.adNetwork),
+              new Firebase.Analytics.Parameter("ad_unit_name", impressionData.instanceName),
+              new Firebase.Analytics.Parameter("ad_format", impressionData.adUnit),
+              new Firebase.Analytics.Parameter("value", revenue),
+              new Firebase.Analytics.Parameter("currency", "USD"),
+            };
+            Firebase.Analytics.FirebaseAnalytics.LogEvent("ad_impression", parameterBuilder.BuildFirebase());
+
 #if ADJUST_ENABLE
             AtoGame.Tracking.Adjust.AtoAdjustTracking.LogAdRevenue(
                 impressionData.adNetwork,

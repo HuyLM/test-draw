@@ -2,7 +2,9 @@ using AtoGame.Base;
 using Firebase.Analytics;
 using Firebase.Crashlytics;
 using Firebase.Extensions;
+#if ATO_REMOTE_CONFIG_ENABLE
 using Firebase.RemoteConfig;
+#endif
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -44,16 +46,18 @@ namespace AtoGame.AtoFirebase
         {
             if(available)
                 return;
-
+            #if ATO_REMOTE_CONFIG_ENABLE
             Firebase.RemoteConfig.FirebaseRemoteConfig.DefaultInstance.SetDefaultsAsync(defaultValues)
               .ContinueWithOnMainThread(task => {
                   // [END set_defaults]
                   FetchDataAsync();
               });
+            #endif
         }
 
         public Task FetchDataAsync()
         {
+#if ATO_REMOTE_CONFIG_ENABLE
             // Start a fetch request.
             // FetchAsync only fetches new data if the current data is older than the provided
             // timespan.  Otherwise it assumes the data is "recent enough", and does nothing.
@@ -64,6 +68,9 @@ namespace AtoGame.AtoFirebase
             Firebase.RemoteConfig.FirebaseRemoteConfig.DefaultInstance.FetchAsync(
                 TimeSpan.FromHours(12));
             return fetchTask.ContinueWithOnMainThread(FetchComplete);
+#else
+            return null;
+#endif
         }
 
         private void FetchComplete(Task fetchTask)
@@ -73,7 +80,7 @@ namespace AtoGame.AtoFirebase
                 Debug.LogError("Retrieval hasn't finished.");
                 return;
             }
-
+            #if ATO_REMOTE_CONFIG_ENABLE
             var remoteConfig = FirebaseRemoteConfig.DefaultInstance;
             var info = remoteConfig.Info;
             if(info.LastFetchStatus != LastFetchStatus.Success)
@@ -90,6 +97,7 @@ namespace AtoGame.AtoFirebase
                     available = true;
                     OnReadyForUse?.Invoke();
                 });
+#endif
         }
 
         #region Auto Ftech
@@ -110,8 +118,10 @@ namespace AtoGame.AtoFirebase
             if(isEnableAutoFetch)
                 return;
             isEnableAutoFetch = true;
+            #if ATO_REMOTE_CONFIG_ENABLE
             Firebase.RemoteConfig.FirebaseRemoteConfig.DefaultInstance.OnConfigUpdateListener
                 += ConfigUpdateListenerEventHandler;
+#endif
         }
 
         private void DisableAutoFetch()
@@ -119,10 +129,12 @@ namespace AtoGame.AtoFirebase
             if(isEnableAutoFetch == false)
                 return;
             isEnableAutoFetch = false;
+            #if ATO_REMOTE_CONFIG_ENABLE
             Firebase.RemoteConfig.FirebaseRemoteConfig.DefaultInstance.OnConfigUpdateListener
                 -= ConfigUpdateListenerEventHandler;
+#endif
         }
-
+        #if ATO_REMOTE_CONFIG_ENABLE
         private void ConfigUpdateListenerEventHandler(object sender, Firebase.RemoteConfig.ConfigUpdateEventArgs args)
         {
             if(args.Error != Firebase.RemoteConfig.RemoteConfigError.None)
@@ -140,7 +152,8 @@ namespace AtoGame.AtoFirebase
                   onUpdateSuccess?.Invoke();
               });
         }
-        #endregion
+#endif
+#endregion
 
         public void Init()
         {
@@ -167,22 +180,34 @@ namespace AtoGame.AtoFirebase
 
         public double GetFloat(string key)
         {
+#if ATO_REMOTE_CONFIG_ENABLE
             return Firebase.RemoteConfig.FirebaseRemoteConfig.DefaultInstance.GetValue(key).DoubleValue;
+#endif
+            return 0;
         }
 
         public string GetString(string key)
         {
+#if ATO_REMOTE_CONFIG_ENABLE
             return Firebase.RemoteConfig.FirebaseRemoteConfig.DefaultInstance.GetValue(key).StringValue;
+#endif
+            return string.Empty;
         }
 
         public bool GetBool(string key)
         {
+#if ATO_REMOTE_CONFIG_ENABLE
             return Firebase.RemoteConfig.FirebaseRemoteConfig.DefaultInstance.GetValue(key).BooleanValue;
+#endif
+            return false;
         }
 
         public long GetLong(string key)
         {
+#if ATO_REMOTE_CONFIG_ENABLE
             return Firebase.RemoteConfig.FirebaseRemoteConfig.DefaultInstance.GetValue(key).LongValue;
+#endif
+            return 0;
         }
     }
 }

@@ -6,7 +6,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace AtoGame.Mediation
+namespace DP
 {
     public class AdmobNativeAd : BaseAd
     {
