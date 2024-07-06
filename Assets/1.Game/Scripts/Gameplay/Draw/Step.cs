@@ -33,13 +33,13 @@ namespace TrickyBrain
         [SerializeField] private ActionMono stopHintStepAction;
 
 
-        [SerializeField] private Drawer drawer;
         [SerializeField] private Line line;
 
         protected Action onWon;
         protected Action onLosed;
         protected bool isEndStep;
         private HintState hintState;
+        private Drawer drawer;
 
 
         public virtual void ValidateObject()
@@ -48,9 +48,10 @@ namespace TrickyBrain
         }
         public void InitStep()
         {
+            drawer = DrawManager.Instance.Drawer;
             drawer.OnBeginDraw = OnBeginDraw;
             drawer.OnEndDraw = OnEndDraw;
-            drawer.InitStep();
+            drawer.ResetLine();
             line.InitStep();
             IgnoreInput(true);
         }
@@ -79,14 +80,14 @@ namespace TrickyBrain
 
         public void StartStep()
         {
-            drawer.StartStep();
+            drawer.ResetLine();
             line.StartStep();
             IgnoreInput(false);
         }
 
         private void ResetStep()
         {
-            drawer.ResetStep();
+            drawer.ResetLine();
             line.ResetStep();
             restartStepAction?.Execute();
             if(hintState == HintState.Pausing)

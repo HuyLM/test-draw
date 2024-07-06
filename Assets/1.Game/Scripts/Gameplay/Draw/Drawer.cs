@@ -18,17 +18,7 @@ namespace TrickyBrain
         public Action OnBeginDraw;
         public Action OnEndDraw;
 
-        public void InitStep()
-        {
-            ResetStep();
-        }
-
-        public void StartStep()
-        {
-            ResetStep();
-        }
-
-        public void ResetStep()
+        public void ResetLine()
         {
             previousPosition = transform.position;
             lineRenderer.positionCount = 0;
@@ -69,7 +59,7 @@ namespace TrickyBrain
             {
                 if(drawing == true)
                 {
-                    ResetStep();
+                    ResetLine();
                     OnEndDraw?.Invoke();
                 }
             }

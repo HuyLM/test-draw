@@ -17,13 +17,8 @@ MonoBehaviour:
     m_SerializedData: []
   m_GUID: 1bd3c90643d700c4ba2fc9c3ff181a0d
   m_SerializeEntries:
-  - m_GUID: 43706613387f0b9429513971a8c2e1a0
-    m_Address: Assets/1.Game/Addressables/Test-Level.prefab
-    m_ReadOnly: 0
-    m_SerializedLabels: []
-    FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: d07ef0de2ed45b9488d6ae525763110a
-    m_Address: Assets/1.Game/Addressables/Test-Level 1.prefab
+  - m_GUID: 1a583653cf2e20d4983ffbdb6041d1f1
+    m_Address: Assets/1.Game/Addressables/Level-002.prefab
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0

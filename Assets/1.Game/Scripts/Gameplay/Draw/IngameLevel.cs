@@ -85,6 +85,7 @@ namespace TrickyBrain
 
         public virtual void WinLevel()
         {
+            EraserTouchController.Instance.Hide();
             EraserTouchController.Instance.Enable = false;
             onWon?.Invoke();
         }
@@ -97,6 +98,7 @@ namespace TrickyBrain
 
         private void LoseLevel()
         {
+            EraserTouchController.Instance.Hide();
             EraserTouchController.Instance.Enable = false;
             onLosed?.Invoke();
         }

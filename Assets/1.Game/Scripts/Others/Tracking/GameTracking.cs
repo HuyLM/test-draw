@@ -9,6 +9,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Purchasing;
 using static AtoGame.OtherModules.Inventory.EventKey;
 using static UnityEngine.Rendering.DebugUI;
 
@@ -20,6 +21,10 @@ namespace TrickyBrain
         {
             AtoFirebaseTracking.Instance.Preload();
             AtoAdjustTracking.Instance.Preload();
+
+#if UNITY_IAP_ENABLE
+            EventDispatcher.Instance.AddListener<AtoGame.IAP.EventKey.OnBoughtIap>(OnPurchasedIap);
+#endif
             return;
             AtoAppsflyerTracking.Instance.Preload();
             EventDispatcher.Instance.AddListener<OnAddItemInventory>(OnAddItemInventory);
@@ -263,15 +268,21 @@ namespace TrickyBrain
             DWHLog.Log.InAppLog(productId, currencyCode, price, transactionId, purchaseToken, where);
         }
 
-        public static void LogAdsLog(AdType type, string where)
+        public static void LogAdsLog(int maxLevelIndex, AdType type, string where)
         {
-            DWHLog.Log.AdsLog(type, where);
+            DWHLog.Log.AdsLog(maxLevelIndex, type, where);
         }
 
         public static void LogSessionLog(float time, string gameMode)
         {
             TimeSpan timeSpan = TimeSpan.FromMinutes(time);
             DWHLog.Log.SessionLog(timeSpan, gameMode);
+        }
+
+        private static void OnPurchasedIap(AtoGame.IAP.EventKey.OnBoughtIap param)
+        {
+            Product product = param.Product;
+            if(product == null) return;
         }
 
         #endregion

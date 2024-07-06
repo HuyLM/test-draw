@@ -9,6 +9,8 @@ namespace TrickyBrain
         [SerializeField] private SpriteRenderer sprite;
         private bool isBlockingInput;
 
+        public SpriteRenderer Sprite => sprite;
+
         private void Start()
         {
 #if !UNITY_EDITOR
@@ -51,6 +53,9 @@ namespace TrickyBrain
             if(added)
             {
                 Hide();
+            }
+            else
+            {
             }
         }
 

@@ -15,7 +15,7 @@ MonoBehaviour:
   Image: {fileID: 21300000, guid: 62aaeab402b8e8f49afc00ab06875873, type: 3}
   TitleKey: key_title_001
   LevelPrefab:
-    m_AssetGUID: 43706613387f0b9429513971a8c2e1a0
+    m_AssetGUID: 1a583653cf2e20d4983ffbdb6041d1f1
     m_SubObjectName: 
     m_SubObjectType: 
     m_EditorAssetChanged: 0

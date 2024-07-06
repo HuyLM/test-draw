@@ -22,41 +22,6 @@ MonoBehaviour:
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: 22775cfcd2a279a479faa44f0f848f21
-    m_Address: Level-002
-    m_ReadOnly: 0
-    m_SerializedLabels: []
-    FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: 5195fb4e1dc35fc46bd5411b07004326
-    m_Address: Level-003
-    m_ReadOnly: 0
-    m_SerializedLabels: []
-    FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: 43b63f043580f1648b0bf0f48f39b5f0
-    m_Address: Level-004
-    m_ReadOnly: 0
-    m_SerializedLabels: []
-    FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: 0081f00446353b542bdf7fda3ce22e9c
-    m_Address: Level-005
-    m_ReadOnly: 0
-    m_SerializedLabels: []
-    FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: a56d82487a3c49f4e988db3f52eda950
-    m_Address: Level-007
-    m_ReadOnly: 0
-    m_SerializedLabels: []
-    FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: e38b3bd90aeb18a4084b487348393625
-    m_Address: Level-006
-    m_ReadOnly: 0
-    m_SerializedLabels: []
-    FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: 60bb41e3b70be6749839f75d6ca61b8e
-    m_Address: Level-008
-    m_ReadOnly: 0
-    m_SerializedLabels: []
-    FlaggedDuringContentUpdateRestriction: 0
   m_ReadOnly: 0
   m_Settings: {fileID: 11400000, guid: 5e5fe3f925d91394da07a7d37a6a65fa, type: 2}
   m_SchemaSet:

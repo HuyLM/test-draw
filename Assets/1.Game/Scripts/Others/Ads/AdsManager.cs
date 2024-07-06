@@ -261,7 +261,7 @@ namespace TrickyBrain
                 onCompleted?.Invoke();
                 GameTracking.LogAdInterShow();
                 var saveData = LocalSaveLoadManager.Get<LevelsSaveData>();
-                GameTracking.LogAdsLog(Falcon.FalconAnalytics.Scripts.Enum.AdType.Interstitial, placement);
+                GameTracking.LogAdsLog(saveData.GetCurrentUnlockLevelIndex(), Falcon.FalconAnalytics.Scripts.Enum.AdType.Interstitial, placement);
             }, (title, desc) =>
             {
                 isShowing = false;
@@ -322,7 +322,8 @@ namespace TrickyBrain
                 onCompleted?.Invoke();
                 OnClaimedRewardVideo?.Invoke();
                 GameTracking.LogAdsRewardComplete();
-                GameTracking.LogAdsLog(Falcon.FalconAnalytics.Scripts.Enum.AdType.Reward, placement);
+                var saveData = LocalSaveLoadManager.Get<LevelsSaveData>();
+                GameTracking.LogAdsLog(saveData.GetCurrentUnlockLevelIndex(), Falcon.FalconAnalytics.Scripts.Enum.AdType.Reward, placement);
             }, (title, desc) =>
             {
                 isShowing = false;
@@ -396,7 +397,7 @@ namespace TrickyBrain
                 _admobBannerAd.Show(
                     (placment, adInfo) => {
                         ReshowBanner();
-                        GameTracking.LogAdsLog(Falcon.FalconAnalytics.Scripts.Enum.AdType.Banner, string.Empty);
+                        GameTracking.LogAdsLog(-1, Falcon.FalconAnalytics.Scripts.Enum.AdType.Banner, string.Empty);
                         GameTracking.LogDisplayBanner();
                     }
                     , (error, adInfo) => {
@@ -463,7 +464,7 @@ namespace TrickyBrain
                 Debug.Log("Showing app open ad.");
                 admobAppOpenAd.Show((placment, adInfo) => {
                     onAppOpenShowCompleted?.Invoke();
-                    GameTracking.LogAdsLog(Falcon.FalconAnalytics.Scripts.Enum.AdType.AppOpen, string.Empty);
+                    GameTracking.LogAdsLog(-1, Falcon.FalconAnalytics.Scripts.Enum.AdType.AppOpen, string.Empty);
                 }, (error, adInfo) => {
                     onAppOpenShowCompleted?.Invoke();
                 });

@@ -21,6 +21,7 @@ namespace TrickyBrain
         [SerializeField] private Button btnSkipLevel;
         [SerializeField] private Button btnHint;
         [SerializeField] private Button btnShop;
+        [SerializeField] private Button btnCheat;
         [SerializeField] private TextMeshProUGUI txtLevel;
         [SerializeField] private TextMeshProUGUI txtStar;
 
@@ -35,6 +36,7 @@ namespace TrickyBrain
             btnSkipLevel.onClick.AddListener(OnSkipButtonClicked);
             btnHint.onClick.AddListener(OnHintButtonClicked);
             btnShop.onClick.AddListener(OnShopButtonClicked);
+            btnCheat.onClick.AddListener(OnCheatButtonClicked);
         }
         private void OnEnable()
         {
@@ -159,6 +161,33 @@ namespace TrickyBrain
 
         private void OnHintButtonClicked()
         {
+            if(AdsManager.Instance.IsRewardVideoReady())
+            {
+                GameTracking.LogShowAds(true, "feature_hint");
+                AdsManager.Instance.ShowRewardVideo("feature_hint", () => {
+                    ShowHint();
+                }, () => {
+                    GameTracking.LogShowAds(false, "feature_hint");
+                    string message = "key_show_ad_failed_message";
+                    string title = "key_show_ad_failed_title";
+                    NoticePopup noticePopup = PopupHUD.Instance.Show<NoticePopup>();
+                    noticePopup.SetMessage(message);
+                    noticePopup.SetTitle(title);
+                });
+            }
+            else
+            {
+                GameTracking.LogShowAds(false, "feature_hint");
+                string message = "key_ad_not_availiable_message";
+                string title = "key_ad_not_availiable_title";
+                NoticePopup noticePopup = PopupHUD.Instance.Show<NoticePopup>();
+                noticePopup.SetMessage(message);
+                noticePopup.SetTitle(title);
+            }
+        }
+
+        private void ShowHint()
+        {
             DrawManager.Instance.CurLevel.ShowHint();
         }
 
@@ -169,6 +198,18 @@ namespace TrickyBrain
 
         private void OnIgnoreInput(IgnoreInputEvent param)
         {
+        }
+
+        private void OnCheatButtonClicked()
+        {
+            var points = FindObjectsByType<Point>(FindObjectsInactive.Exclude, FindObjectsSortMode.None);
+            foreach(var p in points)
+            {
+                if(p.Sprite != null)
+                {
+                    p.Sprite.enabled = true;
+                }
+            }
         }
     }
 }

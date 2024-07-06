@@ -15,6 +15,7 @@ namespace AtoGame.IAP
 #if UNITY_IAP_ENABLE
             public Product Product;
 #endif
+            public string Where;
         }
     }
 }

@@ -10,7 +10,6 @@ namespace TrickyBrain
     {
         [SerializeField] private Point[] winPoints;
         [SerializeField] private Point[] losePoints;
-        [SerializeField] private Drawer drawer;
 
         private bool isCompleted;
         private bool isLosed;
@@ -75,10 +74,12 @@ namespace TrickyBrain
 
         public bool AddLine(Point point)
         {
-            if(drawer.Drawing == false)
+#if UNITY_EDITOR
+            if(DrawManager.Instance.Drawer.Drawing == false)
             {
                 return false;
             }
+#endif
 
             if(isCompleted == true) // if completed but continue draw on other points
             {

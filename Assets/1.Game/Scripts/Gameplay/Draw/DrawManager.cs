@@ -17,6 +17,7 @@ namespace TrickyBrain
     {
         [SerializeField] private Transform tfMapContainer;
         [SerializeField] private ParticleSystem[] winParticles;
+        [SerializeField] private Drawer drawer;
         private AsyncOperationHandle<GameObject> operation;
 
         private IngameLevel _curLevel;
@@ -25,6 +26,8 @@ namespace TrickyBrain
         private bool isPlaying;
 
         public IngameLevel CurLevel => _curLevel;
+        public Drawer Drawer => drawer;
+        public bool IsPlaying => isPlaying;
 
         #region Level
         public IEnumerator IInitializeLevel(AssetReferenceGameObject arLevel, Action onComplete)

@@ -32,6 +32,18 @@ namespace TrickyBrain
                 }
             }
         }
+
+        public ShopItemConfigData GetItem(int id)
+        {
+            for(int i = 0; i < ShopItemConfigDatas.Count; i++)
+            {
+                if(ShopItemConfigDatas[i].Id == id)
+                {
+                    return ShopItemConfigDatas[i];
+                }
+            }
+            return null;
+        }
     }
 
    

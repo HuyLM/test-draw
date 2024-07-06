@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a0a75435e8c29ad40a4ea89ca0f250c0, type: 3}
   m_Name: ShopItemConfigData 2
   m_EditorClassIdentifier: 
-  icon: {fileID: 21300000, guid: fe27bdb8fc97ee845a82702621a37778, type: 3}
+  icon: {fileID: 21300000, guid: b14db1602c45d2d488dbd4195bd15495, type: 3}
   sprite: {fileID: 0}
   lockID: 0
   displayName: 
